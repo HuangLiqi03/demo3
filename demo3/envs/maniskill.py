@@ -253,6 +253,7 @@ def make_env(cfg):
         human_render_camera_configs=dict(width=384, height=384),
         reconfiguration_freq=1 if cfg.num_envs > 1 else None,
         sim_backend=cfg.maniskill.get("sim_backend", "auto"),
+        robot_uids=cfg.robot_uids if hasattr(cfg, "robot_uids") else "panda",
     )
 
     if isinstance(env.action_space, gym.spaces.Dict):

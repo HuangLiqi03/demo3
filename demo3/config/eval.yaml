@@ -3,19 +3,20 @@ defaults:
     - _self_
 
 # environment
-task: ms-peg-insertion-semi
+task: ms-stack-cube-semi
 obs: state
-obs_save: rgbd
+obs_save: rgb
 num_envs: 1
 sim_backend: gpu
+robot_uids: franka_fr3
 
 # evaluation
-checkpoint: /absolute/path/to/checkpoint
-eval_episodes: 1
+checkpoint: /hard_data/user_dataset/huangliqi_dataset/demo3/Maniskill3/StackCubeSemi.pt
+eval_episodes: 20
 # saving
-save_trajectory: false
+save_trajectory: true
 success_only: true
-log_path: .
+log_path: /hard_data/user_dataset/huangliqi_dataset/demo3/demos/ms-stack-cube-semi
 save_video: true
 
 # misc

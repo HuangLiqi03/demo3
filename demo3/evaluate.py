@@ -2,6 +2,7 @@ import os
 
 os.environ["MUJOCO_GL"] = "egl"
 os.environ["LAZY_LEGACY_OP"] = "0"
+os.environ['CUDA_VISIBLE_DEVICES'] = '7'  # 指定使用第一块GPU
 import warnings
 
 warnings.filterwarnings("ignore")

@@ -1,9 +1,17 @@
 import os
+os.environ["OMP_NUM_THREADS"] = "8"
+os.environ["MKL_NUM_THREADS"] = "8"
+os.environ["OPENBLAS_NUM_THREADS"] = "8"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "8"
+os.environ["NUMEXPR_NUM_THREADS"] = "8"
 
 os.environ["MUJOCO_GL"] = "egl"
 os.environ["LAZY_LEGACY_OP"] = "0"
 os.environ["TORCHDYNAMO_INLINE_INBUILT_NN_MODULES"] = "1"
 os.environ["TORCH_LOGS"] = "+recompiles"
+
+# os.environ['WANDB_MODE'] = 'offline'  # 设置WandB离线
+os.environ['CUDA_VISIBLE_DEVICES'] = '7'  # 指定使用GPU
 import warnings
 
 warnings.filterwarnings("ignore")
