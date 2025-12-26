@@ -11,7 +11,7 @@ os.environ["TORCHDYNAMO_INLINE_INBUILT_NN_MODULES"] = "1"
 os.environ["TORCH_LOGS"] = "+recompiles"
 
 # os.environ['WANDB_MODE'] = 'offline'  # 设置WandB离线
-os.environ['CUDA_VISIBLE_DEVICES'] = '7'  # 指定使用GPU
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'  # 指定使用GPU
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -37,7 +37,7 @@ torch.backends.cudnn.benchmark = True
 torch.set_float32_matmul_precision("high")
 
 
-@hydra.main(config_name="demo3", config_path="./config/")
+@hydra.main(config_name="demo3_fr3", config_path="./config/")
 def train(cfg: dict):
     """
     Script for training single-task / multi-task TD-MPC2 agents.

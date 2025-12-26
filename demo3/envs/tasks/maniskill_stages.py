@@ -118,13 +118,36 @@ from mani_skill.envs.tasks.tabletop.pick_cube import PickCubeEnv
 class PickAndPlace_DEMO3(DEMO3_BaseEnv, PickCubeEnv):
     def __init__(self, *args, **kwargs):
         self.n_stages = 3
-        super().__init__(*args, robot_uids="panda_wristcam", **kwargs)
+        # super().__init__(*args, robot_uids="panda_wristcam", **kwargs)
+        super().__init__(*args, **kwargs)
 
     def compute_stage_indicator(self):
         eval_info = self.evaluate()
         return {
             "is_grasped": (eval_info["is_grasped"]).float(),
             "is_obj_placed": (eval_info["is_obj_placed"]).float(),
+        }
+
+
+############################################
+# Place Sphere
+############################################
+
+from mani_skill.envs.tasks.tabletop.place_sphere import PlaceSphereEnv
+
+
+@register_env("PlaceSphere_DEMO3", max_episode_steps=100)
+class PlaceSphere_DEMO3(DEMO3_BaseEnv, PlaceSphereEnv):
+    def __init__(self, *args, **kwargs):
+        self.n_stages = 3
+        # super().__init__(*args, robot_uids="panda_wristcam", **kwargs)
+        super().__init__(*args, **kwargs)
+
+    def compute_stage_indicator(self):
+        eval_info = self.evaluate()
+        return {
+            "is_obj_grasped": (eval_info["is_obj_grasped"]).float(), #placephere环境定义is_obj_grasped
+            "is_obj_on_bin": (eval_info["is_obj_on_bin"]).float(),#placephere环境定义is_obj_on_bin
         }
 
 
@@ -139,7 +162,8 @@ from mani_skill.envs.tasks.tabletop.stack_cube import StackCubeEnv
 class StackCube_DEMO3(DEMO3_BaseEnv, StackCubeEnv):
     def __init__(self, *args, **kwargs):
         self.n_stages = 3
-        super().__init__(*args, robot_uids="panda_wristcam", **kwargs)
+        # super().__init__(*args, robot_uids="panda_wristcam", **kwargs)
+        super().__init__(*args, **kwargs)
 
     def compute_stage_indicator(self):
         eval_info = self.evaluate()
@@ -303,6 +327,12 @@ from mani_skill.utils.geometry import rotation_conversions
 @register_env("TwoRobotPickCube_DEMO3", max_episode_steps=100)
 class TwoRobotPickCube_DEMO3(DEMO3_BaseEnv, TwoRobotPickCube):
     def __init__(self, *args, **kwargs):
+        # 如果传入的是单个字符串，将其转换为双机器人所需的元组
+        robot_uids = kwargs.get("robot_uids")
+        print("robot_uids:", robot_uids)
+        if isinstance(robot_uids, str):
+            kwargs["robot_uids"] = (robot_uids, robot_uids)
+        # ---------------------
         self.n_stages = 4
         super().__init__(*args, **kwargs)
 

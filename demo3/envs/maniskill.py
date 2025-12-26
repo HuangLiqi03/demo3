@@ -17,6 +17,11 @@ MANISKILL_TASKS = {
         env="PickCube-v1",
         control_mode="pd_ee_delta_pose",
     ),
+    "ms-place-sphere": dict(
+        env="PlaceSphere_DEMO3",
+        control_mode="pd_ee_delta_pose",
+        reward_mode="dense",
+    ),
     "ms-pick-ycb": dict(
         env="PickSingleYCB-v1",
         control_mode="pd_ee_delta_pose",
@@ -73,6 +78,11 @@ MANISKILL_TASKS = {
     ## Semi-sparse reward tasks with stage-indicators
     "ms-pick-place-semi": dict(
         env="PickAndPlace_DEMO3",
+        control_mode="pd_ee_delta_pose",
+        reward_mode="semi_sparse",
+    ),
+    "ms-place-sphere-semi": dict(
+        env="PlaceSphere_DEMO3",
         control_mode="pd_ee_delta_pose",
         reward_mode="semi_sparse",
     ),
@@ -253,7 +263,7 @@ def make_env(cfg):
         human_render_camera_configs=dict(width=384, height=384),
         reconfiguration_freq=1 if cfg.num_envs > 1 else None,
         sim_backend=cfg.maniskill.get("sim_backend", "auto"),
-        robot_uids=cfg.robot_uids if hasattr(cfg, "robot_uids") else "panda",
+        robot_uids=cfg.get("robot_uids",'panda_wristcam'),
     )
 
     if isinstance(env.action_space, gym.spaces.Dict):
