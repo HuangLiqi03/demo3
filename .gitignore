@@ -2,6 +2,7 @@
 logs/
 outputs/
 wandb/
+demos/
 
 # Checkpoints
 ckpt/
