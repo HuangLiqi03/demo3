@@ -4,18 +4,19 @@ defaults:
 
 # environment
 task: ms-pick-place-semi
-obs: state
+obs: rgb
 obs_save: rgb
 num_envs: 1
 sim_backend: gpu
+robot_uids: franka_fr3_wristcam
 
 # evaluation
-checkpoint: /hard_data/user_dataset/huangliqi_dataset/demo3/Maniskill3/PickCube.pt
+checkpoint: /data/huangliqi/demo3/logs/ms-pick-place/114514/tdmpc2-rgb/models/final.pt
 eval_episodes: 20
 # saving
 save_trajectory: true
 success_only: true
-log_path: /hard_data/user_dataset/huangliqi_dataset/demo3/demos/ms-pick-place-semi
+log_path: /hard_data/user_dataset/huangliqi_dataset/demo3/demos/ms-pick-place-semi-fr3
 save_video: true
 
 # misc

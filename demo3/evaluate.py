@@ -87,7 +87,7 @@ class ObservationConverter(object):
         return env.get_obs(self.obs_type)
 
 
-@hydra.main(config_name="eval", config_path="./config/")
+@hydra.main(config_name="eval_fr3", config_path="./config/")
 def evaluate(cfg: dict):
     """
     Script for evaluating a single-task / multi-task TD-MPC2 checkpoint.

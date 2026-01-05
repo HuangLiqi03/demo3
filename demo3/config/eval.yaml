@@ -3,20 +3,19 @@ defaults:
     - _self_
 
 # environment
-task: ms-place-sphere
+task: ms-stack-cube-semi
 obs: state
-obs_save: rgb
+obs_save: rgbd
 num_envs: 1
 sim_backend: gpu
-robot_uids: franka_fr3_wristcam
 
 # evaluation
-checkpoint: /data/huangliqi/demo3/logs/ms-place-sphere/1/tdmpc2-state/models/final.pt
-eval_episodes: 20
+checkpoint: /absolute/path/to/checkpoint
+eval_episodes: 1
 # saving
-save_trajectory: true
+save_trajectory: false
 success_only: true
-log_path: /hard_data/user_dataset/huangliqi_dataset/demo3/demos/ms-place-sphere-fr3
+log_path: .
 save_video: true
 
 # misc
