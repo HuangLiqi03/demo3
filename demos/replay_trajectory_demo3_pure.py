@@ -13,7 +13,10 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "3"  # en
 from dataclasses import dataclass
 from typing import Annotated, Optional
-
+os.environ["MUJOCO_GL"] = "egl"
+os.environ["LAZY_LEGACY_OP"] = "0"
+os.environ["TORCHDYNAMO_INLINE_INBUILT_NN_MODULES"] = "1"
+os.environ["TORCH_LOGS"] = "+recompiles"
 import gymnasium as gym
 import h5py
 import numpy as np
@@ -35,21 +38,21 @@ import envs.tasks.maniskill_stages
 
 @dataclass
 class Args:
-    traj_path: str
+    traj_path: str = "/data/huangliqi/demo3/demos/StackCube_DEMO3/motionplanning/20251231_181659.h5"
     """Path to the trajectory .h5 file to replay"""
     sim_backend: Annotated[Optional[str], tyro.conf.arg(aliases=["-b"])] = None
     """Which simulation backend to use. Can be 'physx_cpu', 'physx_gpu'. If not specified the backend used is the same as the one used to collect the trajectory data."""
-    obs_mode: Annotated[Optional[str], tyro.conf.arg(aliases=["-o"])] = None
+    obs_mode: Annotated[Optional[str], tyro.conf.arg(aliases=["-o"])] = "rgb"
     """Target observation mode to record in the trajectory. See
     https://maniskill.readthedocs.io/en/latest/user_guide/concepts/observation.html for a full list of supported observation modes."""
-    target_control_mode: Annotated[Optional[str], tyro.conf.arg(aliases=["-c"])] = None
+    target_control_mode: Annotated[Optional[str], tyro.conf.arg(aliases=["-c"])] = "pd_ee_delta_pose"
     """Target control mode to convert the demonstration actions to.
     Note that not all control modes can be converted to others successfully and not all robots have easy to convert control modes.
     Currently the Panda robots are the best supported when it comes to control mode conversion. Furthermore control mode conversion is not supported in GPU parallelized environments.
     """
     verbose: bool = False
     """Whether to print verbose information during trajectory replays"""
-    save_traj: bool = False
+    save_traj: bool = True
     """Whether to save trajectories to disk. This will not override the original trajectory file."""
     save_video: bool = False
     """Whether to save videos"""
@@ -73,7 +76,7 @@ class Args:
     reward_mode: Optional[str] = None
     """Specifies the reward type that the env should use. By default it will pick the first supported reward mode. Most environments
     support 'sparse', 'none', and some further support 'normalized_dense' and 'dense' reward modes"""
-    record_rewards: bool = False
+    record_rewards: bool = True
     """Whether the replayed trajectory should include rewards"""
     shader: Optional[str] = None
     """Change shader used for rendering for all cameras. Default is none meaning it will use whatever was used in the original data collection or the environment default.

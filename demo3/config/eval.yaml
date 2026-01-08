@@ -3,19 +3,19 @@ defaults:
     - _self_
 
 # environment
-task: ms-stack-cube-semi
-obs: state
-obs_save: rgbd
+task: mw-pick-place-wall-semi
+obs: rgb
+obs_save: rgb
 num_envs: 1
 sim_backend: gpu
 
 # evaluation
-checkpoint: /absolute/path/to/checkpoint
-eval_episodes: 1
+checkpoint: "/home/huangliqi/demo3/logs/mw-pick-place-wall-dense/1/default/models/agent_1000000.pt"
+eval_episodes: 20
 # saving
-save_trajectory: false
+save_trajectory: true
 success_only: true
-log_path: .
+log_path: /home/huangliqi/demo3/demos/mw-pick-place-wall-semi
 save_video: true
 
 # misc
