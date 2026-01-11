@@ -1,6 +1,10 @@
 import multiprocessing as mp
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["MUJOCO_GL"] = "egl"
+os.environ["LAZY_LEGACY_OP"] = "0"
+os.environ["TORCHDYNAMO_INLINE_INBUILT_NN_MODULES"] = "1"
+os.environ["TORCH_LOGS"] = "+recompiles"
 from copy import deepcopy
 import time
 import argparse
@@ -36,10 +40,10 @@ MP_SOLUTIONS = {
 }
 def parse_args(args=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("-e", "--env-id", type=str, default="StackCube_DEMO3", help=f"Environment to run motion planning solver on. Available options are {list(MP_SOLUTIONS.keys())}")
+    parser.add_argument("-e", "--env-id", type=str, default="PlaceSphere_DEMO3", help=f"Environment to run motion planning solver on. Available options are {list(MP_SOLUTIONS.keys())}")
     parser.add_argument("-o", "--obs-mode", type=str, default="none", help="Observation mode to use. Usually this is kept as 'none' as observations are not necesary to be stored, they can be replayed later via the mani_skill.trajectory.replay_trajectory script.")
-    parser.add_argument("-n", "--num-traj", type=int, default=10, help="Number of trajectories to generate.")
-    parser.add_argument("--only-count-success", action="store_true", help="If true, generates trajectories until num_traj of them are successful and only saves the successful trajectories/videos")
+    parser.add_argument("-n", "--num-traj", type=int, default=20, help="Number of trajectories to generate.")
+    parser.add_argument("--only-count-success", default=True,help="If true, generates trajectories until num_traj of them are successful and only saves the successful trajectories/videos")
     parser.add_argument("--reward-mode", type=str)
     parser.add_argument("-b", "--sim-backend", type=str, default="auto", help="Which simulation backend to use. Can be 'auto', 'cpu', 'gpu'")
     parser.add_argument("--render-mode", type=str, default="rgb_array", help="can be 'sensors' or 'rgb_array' which only affect what is saved to videos")
@@ -47,7 +51,7 @@ def parse_args(args=None):
     parser.add_argument("--save-video", action="store_true", help="whether or not to save videos locally")
     parser.add_argument("--traj-name", type=str, help="The name of the trajectory .h5 file that will be created.")
     parser.add_argument("--shader", default="default", type=str, help="Change shader used for rendering. Default is 'default' which is very fast. Can also be 'rt' for ray tracing and generating photo-realistic renders. Can also be 'rt-fast' for a faster but lower quality ray-traced renderer")
-    parser.add_argument("--record-dir", type=str, default="demos", help="where to save the recorded trajectories")
+    parser.add_argument("--record-dir", type=str, default="./replay", help="where to save the recorded trajectories")
     parser.add_argument("--num-procs", type=int, default=1, help="Number of processes to use to help parallelize the trajectory replay process. This uses CPU multiprocessing and only works with the CPU simulation backend at the moment.")
     parser.add_argument("--robot-uids", type=str, default="panda_wristcam", help=f"Robot to use in the environment")
     return parser.parse_args()

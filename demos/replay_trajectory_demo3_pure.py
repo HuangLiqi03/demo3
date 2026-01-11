@@ -38,7 +38,7 @@ import envs.tasks.maniskill_stages
 
 @dataclass
 class Args:
-    traj_path: str = "/data/huangliqi/demo3/demos/StackCube_DEMO3/motionplanning/20251231_181659.h5"
+    traj_path: str = "/data/huangliqi/demo3/demos/StackCube_DEMO3/motionplanning/20260109_212045.h5"
     """Path to the trajectory .h5 file to replay"""
     sim_backend: Annotated[Optional[str], tyro.conf.arg(aliases=["-b"])] = None
     """Which simulation backend to use. Can be 'physx_cpu', 'physx_gpu'. If not specified the backend used is the same as the one used to collect the trajectory data."""
@@ -54,7 +54,7 @@ class Args:
     """Whether to print verbose information during trajectory replays"""
     save_traj: bool = True
     """Whether to save trajectories to disk. This will not override the original trajectory file."""
-    save_video: bool = False
+    save_video: bool = True
     """Whether to save videos"""
     max_retry: int = 0
     """Maximum number of times to try and replay a trajectory until the task reaches a success state at the end."""
