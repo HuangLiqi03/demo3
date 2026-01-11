@@ -87,7 +87,7 @@ class ObservationConverter(object):
         return env.get_obs(self.obs_type)
 
 
-@hydra.main(config_name="eval_fr3", config_path="./config/")
+@hydra.main(config_name="eval", config_path="./config/")
 def evaluate(cfg: dict):
     """
     Script for evaluating a single-task / multi-task TD-MPC2 checkpoint.
@@ -212,6 +212,12 @@ def evaluate(cfg: dict):
                     if cfg.save_trajectory:
                         terminated = done  # Only terminate when truncated
                         info = {k: v.cpu() for k, v in info.items()}
+                        
+                        # ## Fix for 0-dim TensorDicts 1.10
+                        # for k, v in info.items():
+                        #     if hasattr(v, "batch_dims") and v.batch_dims == 0:
+                        #         info[k] = v.unsqueeze(0)
+                        # ##        
                         saver.add_transition(
                             action.cpu(),
                             obs_save.cpu(),

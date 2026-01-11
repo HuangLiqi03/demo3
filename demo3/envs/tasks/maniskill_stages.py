@@ -191,7 +191,8 @@ class PegInsertionSide_DEMO3(DEMO3_BaseEnv, PegInsertionSideEnv):
 
     def __init__(self, *args, **kwargs):
         self.n_stages = 3
-        super().__init__(*args, robot_uids="panda_wristcam_custom", **kwargs)
+        # super().__init__(*args, robot_uids="panda_wristcam_custom", **kwargs)
+        super().__init__(*args, **kwargs)
 
     def is_peg_pre_inserted(self):
         peg_head_wrt_goal = self.goal_pose.inv() * self.peg_head_pose
@@ -261,7 +262,8 @@ from mani_skill.utils.geometry import rotation_conversions
 class LiftPegUpright_DEMO3(DEMO3_BaseEnv, LiftPegUprightEnv):
     def __init__(self, *args, **kwargs):
         self.n_stages = 3
-        super().__init__(*args, robot_uids="panda_wristcam", **kwargs)
+        # super().__init__(*args, robot_uids="panda_wristcam", **kwargs)
+        super().__init__(*args, **kwargs)
 
     def _initialize_episode(self, env_idx: torch.Tensor, options: dict):
         super()._initialize_episode(env_idx, options)
@@ -414,8 +416,9 @@ from mani_skill.utils.geometry import rotation_conversions
 class PokeCube_DEMO3(DEMO3_BaseEnv, PokeCubeEnv):
     def __init__(self, *args, **kwargs):
         self.n_stages = 3
-        super().__init__(*args, robot_uids="panda_wristcam_custom", **kwargs)
-
+        # super().__init__(*args, robot_uids="panda_wristcam_custom", **kwargs)
+        super().__init__(*args, **kwargs)
+        
     def _initialize_episode(self, env_idx: torch.Tensor, options: dict):
         super()._initialize_episode(env_idx, options)
         b = len(env_idx)
@@ -466,6 +469,7 @@ from mani_skill.envs.tasks.humanoid import UnitreeG1PlaceAppleInBowlEnv
 class HumanoidPlaceApple_DEMO3(DEMO3_BaseEnv, UnitreeG1PlaceAppleInBowlEnv):
     def __init__(self, *args, **kwargs):
         self.n_stages = 3
+        kwargs.pop('robot_uids', None)
         super().__init__(*args, **kwargs)
 
     def evaluate(self):

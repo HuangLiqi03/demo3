@@ -3,22 +3,22 @@ defaults:
     - _self_
 
 # environment
-task: mw-pick-place-wall-semi
-obs: rgb
+task: ms-place-sphere-semi
+obs: state
 obs_save: rgb
 num_envs: 1
 sim_backend: gpu
-
+robot_uids: franka_fr3_wristcam
 # evaluation
-checkpoint: "/home/huangliqi/demo3/logs/mw-pick-place-wall-dense/1/default/models/agent_1000000.pt"
+checkpoint: /data/huangliqi/demo3/logs/ms-place-sphere/1/tdmpc2-state/models/final.pt
 eval_episodes: 20
 # saving
 save_trajectory: true
 success_only: true
-log_path: /home/huangliqi/demo3/demos/mw-pick-place-wall-semi
+log_path: /hard_data/user_dataset/huangliqi_dataset/demo3/demos/ms-place-sphere-semi
 save_video: true
 
 # misc
 render_obs: false
 compile: false
-add_text: false
+add_text: false 
